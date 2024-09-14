@@ -31,7 +31,7 @@ final class WeatherDetailsViewController: UIViewController {
         super.viewDidLoad()
 
         
-        view.backgroundColor = .green
+        view.backgroundColor = .white
     }
     
 }

@@ -14,11 +14,11 @@ protocol WeatherDetailsInteractorInput {
 final class WeatherDetailsInteractor {
     
     private let presenter: WeatherDetailsPresenter
-    private let networkService: NetworkServiceProtocol
+    private let weatherService: WeatherServiceProtocol
     
-    init(presenter: WeatherDetailsPresenter, networkService: NetworkServiceProtocol) {
+    init(presenter: WeatherDetailsPresenter, weatherService: WeatherServiceProtocol) {
         self.presenter = presenter
-        self.networkService = networkService
+        self.weatherService = weatherService
     }
 }
 

@@ -24,6 +24,7 @@ final class WeatherMainViewController: BaseViewController {
         button.setTitle("Update", for: .normal)
         button.setTitleColor(.blue, for: .normal)
         
+        button.addTarget(self, action: #selector(didTapUpdateButton), for: .touchUpInside)
         return button
     }()
     
@@ -75,6 +76,9 @@ final class WeatherMainViewController: BaseViewController {
         interactor.didTapDetailsButton()
     }
     
+    @objc private func didTapUpdateButton() {
+        interactor.didTapUpdateButton()
+    }
 }
 
 extension WeatherMainViewController: WeatherMainViewControllerInput {
@@ -83,9 +87,10 @@ extension WeatherMainViewController: WeatherMainViewControllerInput {
         case .loading:
             showLoadingIndicator()
         case .error(let error):
-            break
+            hideLoadingIndicator()
+            showAlert(message: error.localizedDescription)
         case .content:
-            break
+            hideLoadingIndicator()
         }
     }
 }

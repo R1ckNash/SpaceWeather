@@ -9,6 +9,11 @@ import UIKit
 
 class BaseViewController: UIViewController {
     
+    //MARK: - Properties
+    private lazy var alertView: AlertViewProtocol = {
+        return AlertView(delegate: self)
+    }()
+    
     //MARK: - UI
     private lazy var activityIndicator: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView()
@@ -36,11 +41,22 @@ class BaseViewController: UIViewController {
         ])
     }
     
+    //MARK: - Public methods
     func showLoadingIndicator() {
         activityIndicator.startAnimating()
     }
     
     func hideLoadingIndicator() {
         activityIndicator.stopAnimating()
+    }
+    
+    func showAlert(message: String) {
+        let alertModel = AlertModel(
+            title: "Error",
+            message: message,
+            buttonText: "OK",
+            completion: nil
+        )
+        alertView.showAlert(model: alertModel)
     }
 }

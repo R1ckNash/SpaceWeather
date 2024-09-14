@@ -23,7 +23,7 @@ extension WeatherDetailsBuilder: BuilderProtocol {
     func build() -> UIViewController {
         let presenter = WeatherDetailsPresenter()
         let interactor = WeatherDetailsInteractor(presenter: presenter,
-                                               networkService: container.networkService)
+                                               weatherService: container.weatherService)
         
         let viewController = WeatherDetailsViewController(interactor: interactor)
         

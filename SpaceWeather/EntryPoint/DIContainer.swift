@@ -8,9 +8,14 @@
 import Foundation
 
 final class DIContainer {
-    let networkService: NetworkServiceProtocol
     
-    init(networkService: NetworkServiceProtocol) {
-        self.networkService = networkService
-    }
+    private lazy var remoteDataSource: RemoteDataSourceProtocol = RemoteDataSource()
+    private lazy var localDataSource: LocalDataSourceProtocol = LocalDataSource()
+    private lazy var weatherServiceInstance: WeatherServiceProtocol = WeatherService(remote: remoteDataSource, local: localDataSource)
+    
+    var weatherService: WeatherServiceProtocol {
+            return weatherServiceInstance
+        }
+
+    
 }

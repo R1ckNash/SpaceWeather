@@ -29,7 +29,7 @@ extension WeatherMainBuilder: BuilderProtocol {
         let router = WeatherMainRouter(container: container)
         let interactor = WeatherMainInteractor(presenter: presenter,
                                                router: router,
-                                               networkService: container.networkService)
+                                               weatherService: container.weatherService)
         let viewController = WeatherMainViewController(interactor: interactor)
         
         router.view = viewController

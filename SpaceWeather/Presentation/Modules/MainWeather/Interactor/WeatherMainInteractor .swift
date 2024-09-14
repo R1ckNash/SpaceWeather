@@ -10,22 +10,38 @@ import Foundation
 protocol WeatherMainInteractorInput: AnyObject {
     func viewDidLoad()
     func didTapDetailsButton()
+    func didTapUpdateButton()
 }
 
 final class WeatherMainInteractor {
     
     private let presenter: WeatherMainPresenterInput
     private let router: WeatherMainRouter
-    private let networkService: NetworkServiceProtocol
+    private let weatherService: WeatherServiceProtocol
     
-    init(presenter: WeatherMainPresenter, router: WeatherMainRouter, networkService: NetworkServiceProtocol) {
+    init(presenter: WeatherMainPresenter, router: WeatherMainRouter, weatherService: WeatherServiceProtocol) {
         self.presenter = presenter
         self.router = router
-        self.networkService = networkService
+        self.weatherService = weatherService
     }
     
-    func loadCurrentWeather() {
-        
+    func fetchCurrentWeather() {
+        weatherService.fetch { [weak self] result in
+            DispatchQueue.main.async {
+                self?.handle(result)
+            }
+        }
+    }
+    
+    func handle(_ result: Result<WeatherDTO, ApiError>) {
+        switch result {
+        case .success(let weatherDto):
+            print(weatherDto)
+            // map to domain
+            presenter.showContent()
+        case .failure(let error):
+            presenter.showError(error)
+        }
     }
         
 }
@@ -36,9 +52,14 @@ extension WeatherMainInteractor: WeatherMainInteractorInput {
         router.openDetailsScreen()
     }
     
+    func didTapUpdateButton() {
+        presenter.showLoading()
+        fetchCurrentWeather()
+    }
+    
     func viewDidLoad() {
         presenter.showLoading()
-        loadCurrentWeather()
+        fetchCurrentWeather()
     }
     
     

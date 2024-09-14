@@ -16,8 +16,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
         
-        let networkService = NetworkService()
-        let container = DIContainer(networkService: networkService)
+        let container = DIContainer()
         
         let appRouter = AppRouter(window: window!, container: container)
         appRouter.start()
