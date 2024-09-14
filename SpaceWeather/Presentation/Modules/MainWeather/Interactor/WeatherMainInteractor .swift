@@ -36,9 +36,7 @@ final class WeatherMainInteractor {
     func handle(_ result: Result<WeatherDTO, ApiError>) {
         switch result {
         case .success(let weatherDto):
-            print(weatherDto)
-            // map to domain
-            presenter.showContent()
+            presenter.showContent(.init(weatherDto: weatherDto))
         case .failure(let error):
             presenter.showError(error)
         }
@@ -54,13 +52,14 @@ extension WeatherMainInteractor: WeatherMainInteractorInput {
     
     func didTapUpdateButton() {
         presenter.showLoading()
-        fetchCurrentWeather()
+        DispatchQueue.global().asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            self?.fetchCurrentWeather()
+        }
     }
     
     func viewDidLoad() {
         presenter.showLoading()
         fetchCurrentWeather()
     }
-    
     
 }

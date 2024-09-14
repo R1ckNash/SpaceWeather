@@ -15,7 +15,7 @@ class BaseViewController: UIViewController {
     }()
     
     //MARK: - UI
-    private lazy var activityIndicator: UIActivityIndicatorView = {
+    lazy var activityIndicator: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView()
         indicator.translatesAutoresizingMaskIntoConstraints = false
         indicator.hidesWhenStopped = true
@@ -42,13 +42,6 @@ class BaseViewController: UIViewController {
     }
     
     //MARK: - Public methods
-    func showLoadingIndicator() {
-        activityIndicator.startAnimating()
-    }
-    
-    func hideLoadingIndicator() {
-        activityIndicator.stopAnimating()
-    }
     
     func showAlert(message: String) {
         let alertModel = AlertModel(

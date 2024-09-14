@@ -10,7 +10,7 @@ import Foundation
 protocol WeatherMainPresenterInput {
     func showLoading()
     func showError(_ error: Error)
-    func showContent()
+    func showContent(_ model: WeatherModel)
 }
 
 final class WeatherMainPresenter {
@@ -28,7 +28,7 @@ extension WeatherMainPresenter: WeatherMainPresenterInput {
         view?.configure(state: .error(error))
     }
     
-    func showContent() {
-        view?.configure(state: .content)
+    func showContent(_ model: WeatherModel) {
+        view?.configure(state: .content(model))
     }
 }
