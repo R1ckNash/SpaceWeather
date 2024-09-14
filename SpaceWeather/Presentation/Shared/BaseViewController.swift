@@ -20,6 +20,7 @@ class BaseViewController: UIViewController {
         indicator.translatesAutoresizingMaskIntoConstraints = false
         indicator.hidesWhenStopped = true
         indicator.style = .large
+        indicator.color = .gray
         
         return indicator
     }()

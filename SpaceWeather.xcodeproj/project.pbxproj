@@ -155,8 +155,8 @@
 		9B25AF1D2C95DEDE007E5BF5 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				9B25AF1B2C95D669007E5BF5 /* ViewState.swift */,
 				9B25AF1E2C95DF0A007E5BF5 /* BaseViewController.swift */,
+				9B25AF1B2C95D669007E5BF5 /* ViewState.swift */,
 				9B25AF202C95F0DB007E5BF5 /* AlertView.swift */,
 			);
 			path = Shared;

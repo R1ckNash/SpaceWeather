@@ -24,6 +24,7 @@ final class WeatherMainViewController: BaseViewController {
     private let cityNameLabel: UILabel = UILabel()
     private let temperatureLabel: UILabel = UILabel()
     private let weatherIconImageView: UIImageView = UIImageView()
+    private let stackView: UIStackView = UIStackView()
     
     //MARK: - Lifecycle
     init(interactor: WeatherMainInteractorInput) {
@@ -94,14 +95,16 @@ extension WeatherMainViewController {
         backgroundView.addSubview(cityNameLabel)
         backgroundView.addSubview(temperatureLabel)
         backgroundView.addSubview(weatherIconImageView)
+        view.addSubview(stackView)
         
-        view.addSubview(updateButton)
-        view.addSubview(detailsButton)
+        stackView.addArrangedSubview(updateButton)
+        stackView.addArrangedSubview(detailsButton)
         
         configureBackground()
-        configureCityNameLable()
+        configureCityNameLabel()
         configureTemperatureLabel()
         configureWeatherIconImageView()
+        configureStackView()
         configureUpdateButton()
         configureDetailsButton()
     }
@@ -119,21 +122,21 @@ extension WeatherMainViewController {
         ])
     }
     
-    private func configureCityNameLable() {
-        cityNameLabel.translatesAutoresizingMaskIntoConstraints = false
-        cityNameLabel.font = UIFont.boldSystemFont(ofSize: 24)
-        cityNameLabel.textAlignment = .center
-        cityNameLabel.textColor = .black
+    private func configureWeatherIconImageView() {
+        weatherIconImageView.translatesAutoresizingMaskIntoConstraints = false
+        weatherIconImageView.contentMode = .scaleAspectFit
         
         NSLayoutConstraint.activate([
-            cityNameLabel.centerXAnchor.constraint(equalTo: backgroundView.centerXAnchor),
-            cityNameLabel.topAnchor.constraint(equalTo: backgroundView.safeAreaLayoutGuide.topAnchor, constant: 20),
+            weatherIconImageView.centerXAnchor.constraint(equalTo: backgroundView.centerXAnchor),
+            weatherIconImageView.topAnchor.constraint(equalTo: backgroundView.safeAreaLayoutGuide.topAnchor, constant: 20),
+            weatherIconImageView.widthAnchor.constraint(equalToConstant: 80),
+            weatherIconImageView.heightAnchor.constraint(equalToConstant: 80),
         ])
     }
     
     private func configureTemperatureLabel() {
         temperatureLabel.translatesAutoresizingMaskIntoConstraints = false
-        temperatureLabel.font = UIFont.systemFont(ofSize: 40)
+        temperatureLabel.font = UIFont.systemFont(ofSize: 60)
         temperatureLabel.textAlignment = .center
         temperatureLabel.textColor = .black
         
@@ -143,15 +146,30 @@ extension WeatherMainViewController {
         ])
     }
     
-    private func configureWeatherIconImageView() {
-        weatherIconImageView.translatesAutoresizingMaskIntoConstraints = false
-        weatherIconImageView.contentMode = .scaleAspectFit
+    private func configureCityNameLabel() {
+        cityNameLabel.translatesAutoresizingMaskIntoConstraints = false
+        cityNameLabel.font = UIFont.boldSystemFont(ofSize: 24)
+        cityNameLabel.textAlignment = .center
+        cityNameLabel.textColor = .black
         
         NSLayoutConstraint.activate([
-            weatherIconImageView.centerXAnchor.constraint(equalTo: backgroundView.centerXAnchor),
-            weatherIconImageView.topAnchor.constraint(equalTo: cityNameLabel.bottomAnchor, constant: 20),
-            weatherIconImageView.widthAnchor.constraint(equalToConstant: 100),
-            weatherIconImageView.heightAnchor.constraint(equalToConstant: 100),
+            cityNameLabel.centerXAnchor.constraint(equalTo: backgroundView.centerXAnchor),
+            cityNameLabel.topAnchor.constraint(equalTo: temperatureLabel.bottomAnchor, constant: 20),
+            cityNameLabel.bottomAnchor.constraint(lessThanOrEqualTo: backgroundView.bottomAnchor, constant: -40)
+        ])
+    }
+    
+    private func configureStackView() {
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .horizontal
+        stackView.spacing = 20
+        stackView.alignment = .center
+        
+        NSLayoutConstraint.activate([
+            stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            stackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
+            stackView.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: 20),
+            stackView.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -20)
         ])
     }
     
@@ -160,23 +178,12 @@ extension WeatherMainViewController {
         updateButton.setTitle("Update", for: .normal)
         updateButton.setTitleColor(.blue, for: .normal)
         updateButton.addTarget(self, action: #selector(didTapUpdateButton), for: .touchUpInside)
-        
-        NSLayoutConstraint.activate([
-            updateButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            updateButton.bottomAnchor.constraint(equalTo: detailsButton.topAnchor, constant: -20)
-        ])
     }
     
     private func configureDetailsButton() {
         detailsButton.translatesAutoresizingMaskIntoConstraints = false
         detailsButton.setTitle("Details", for: .normal)
         detailsButton.setTitleColor(.blue, for: .normal)
-        
         detailsButton.addTarget(self, action: #selector(didTapDetailsButton), for: .touchUpInside)
-        
-        NSLayoutConstraint.activate([
-            detailsButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            detailsButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
-        ])
     }
 }
