@@ -1,0 +1,46 @@
+//
+//  BaseViewController.swift
+//  SpaceWeather
+//
+//  Created by Ilia Liasin on 14/09/2024.
+//
+
+import UIKit
+
+class BaseViewController: UIViewController {
+    
+    //MARK: - UI
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView()
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        indicator.hidesWhenStopped = true
+        indicator.style = .large
+        
+        return indicator
+    }()
+    
+    //MARK: - Lifecycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        setupLayout()
+    }
+    
+    //MARK: - Private methods
+    private func setupLayout() {
+        view.addSubview(activityIndicator)
+        
+        NSLayoutConstraint.activate([
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+    }
+    
+    func showLoadingIndicator() {
+        activityIndicator.startAnimating()
+    }
+    
+    func hideLoadingIndicator() {
+        activityIndicator.stopAnimating()
+    }
+}
