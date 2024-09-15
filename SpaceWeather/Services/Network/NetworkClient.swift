@@ -9,43 +9,58 @@ import Foundation
 
 struct NetworkClient {
     
-    func fetch(url: URL, completion: @escaping (Result<Data, Error>) -> Void) {
-        let request = URLRequest(url: url)
+    func fetch(urlString: String, completion: @escaping (Result<Data, Error>) -> Void) {
         
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+        do {
             
-            if let error = error {
-                completion(.failure(error))
-                return
-            }
+            let url = try makeURL(for: urlString)
+            let request = URLRequest(url: url)
             
-            guard let httpResponse = response as? HTTPURLResponse else {
-                completion(.failure(ApiError.codeError))
-                return
+            let task = URLSession.shared.dataTask(with: request) { data, response, error in
+                
+                if let error = error {
+                    completion(.failure(error))
+                    return
+                }
+                
+                guard let httpResponse = response as? HTTPURLResponse else {
+                    completion(.failure(APIError.codeError))
+                    return
+                }
+                
+                switch httpResponse.statusCode {
+                case 200...299:
+                    decodeResponse(from: data, completion: completion)
+                    return
+                case 500...599:
+                    completion(.failure(APIError.serverIsNotResponding))
+                    return
+                default:
+                    completion(.failure(APIError.somethingWentWrong))
+                    return
+                }
             }
+            task.resume()
             
-            switch httpResponse.statusCode {
-            case 200...299:
-                decodeResponse(from: data, completion: completion)
-                return
-            case 500...599:
-                completion(.failure(ApiError.serverIsNotResponding))
-                return
-            default:
-                completion(.failure(ApiError.somethingWentWrong))
-                return
-            }
+        } catch {
+            completion(.failure(error))
         }
-        
-        task.resume()
     }
+    
+}
+
+extension NetworkClient {
     
     private func decodeResponse(from data: Data?, completion: @escaping (Result<Data, Error>) -> Void) {
         if let data = data {
             completion(.success(data))
         } else {
-            completion(.failure(ApiError.decodingError))
+            completion(.failure(APIError.decodingError))
         }
     }
     
+    private func makeURL(for urlString: String) throws -> URL {
+        guard let url = URL(string: urlString) else { throw APIError.invalidURL }
+        return url
+    }
 }

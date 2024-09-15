@@ -38,7 +38,7 @@ final class WeatherMainInteractor {
         }
     }
     
-    func handle(_ result: Result<WeatherDTO, ApiError>) {
+    func handle(_ result: Result<WeatherDTO, APIError>) {
         switch result {
         case .success(let weatherDto):
             let weatherModel = WeatherModel(weatherDto: weatherDto)

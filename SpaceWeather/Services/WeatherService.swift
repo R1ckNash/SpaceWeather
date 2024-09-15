@@ -8,7 +8,7 @@
 import Foundation
 
 protocol WeatherServiceProtocol {
-    func fetch(completion: @escaping (Result<WeatherDTO, ApiError>) -> Void)
+    func fetch(completion: @escaping (Result<WeatherDTO, APIError>) -> Void)
 }
 
 final class WeatherService {
@@ -27,8 +27,11 @@ final class WeatherService {
 //MARK: - Extensions
 extension WeatherService: WeatherServiceProtocol {
     
-    func fetch(completion: @escaping (Result<WeatherDTO, ApiError>) -> Void) {
-        remote.fetch { [weak self] result in
+    func fetch(completion: @escaping (Result<WeatherDTO, APIError>) -> Void) {
+        
+        let urlString = WeatherRequest().urlString
+        
+        remote.fetch(urlString: urlString) { [weak self] result in
             guard let self else { return }
             
             switch result {
