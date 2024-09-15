@@ -184,6 +184,7 @@
 			isa = PBXGroup;
 			children = (
 				9B25AF312C96156D007E5BF5 /* WeatherModel.swift */,
+				9B25AF222C95F2E9007E5BF5 /* AlertModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -243,7 +244,6 @@
 			isa = PBXGroup;
 			children = (
 				9B1B21472C957B60007C9C44 /* WeatherDTO.swift */,
-				9B25AF222C95F2E9007E5BF5 /* AlertModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";

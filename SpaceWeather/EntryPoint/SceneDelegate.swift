@@ -20,7 +20,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let appRouter = AppRouter(window: window!, container: container)
         appRouter.start()
-
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {}
@@ -32,7 +31,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneWillEnterForeground(_ scene: UIScene) {}
 
     func sceneDidEnterBackground(_ scene: UIScene) {}
-
 
 }
 

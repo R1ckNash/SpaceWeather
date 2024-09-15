@@ -8,6 +8,7 @@
 import Foundation
 
 struct WeatherModel {
+    
     let name: String
     let temp: Int
     let description: String
@@ -41,9 +42,11 @@ struct WeatherModel {
             return "cloud"
         }
     }
+    
 }
 
 extension WeatherModel {
+    
     init(weatherDto: WeatherDTO) {
         name = weatherDto.name
         temp = Int(weatherDto.main.temp)
@@ -55,4 +58,5 @@ extension WeatherModel {
         let iconCode = weatherDto.weather.first?.icon ?? ""
         iconName = WeatherModel.iconNameForWeather(conditionId: conditionId, icon: iconCode)
     }
+    
 }

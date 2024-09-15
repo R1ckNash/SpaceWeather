@@ -14,13 +14,16 @@ protocol BuilderProtocol {
 
 final class WeatherMainBuilder {
     
+    //MARK: - Properties
     private let container: DIContainer
     
+    //MARK: - Lifecycle
     init(container: DIContainer) {
         self.container = container
     }
 }
 
+//MARK: - Extensions
 extension WeatherMainBuilder: BuilderProtocol {
     
     func build() -> UIViewController {
@@ -33,7 +36,6 @@ extension WeatherMainBuilder: BuilderProtocol {
         
         router.view = viewController
         presenter.view = viewController
-        
         return viewController
     }
     

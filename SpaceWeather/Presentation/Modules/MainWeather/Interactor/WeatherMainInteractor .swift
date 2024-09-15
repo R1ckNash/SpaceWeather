@@ -15,16 +15,21 @@ protocol WeatherMainInteractorInput: AnyObject {
 
 final class WeatherMainInteractor {
     
+    //MARK: - Properties
     private let presenter: WeatherMainPresenterInput
-    private let router: WeatherMainRouter
+    private let router: WeatherMainRouterInput
     private let weatherService: WeatherServiceProtocol
     
-    init(presenter: WeatherMainPresenter, router: WeatherMainRouter, weatherService: WeatherServiceProtocol) {
+    private var weatherModel: WeatherModel?
+    
+    //MARK: - Lifecycle
+    init(presenter: WeatherMainPresenter, router: WeatherMainRouterInput, weatherService: WeatherServiceProtocol) {
         self.presenter = presenter
         self.router = router
         self.weatherService = weatherService
     }
     
+    //MARK: - Public methods
     func fetchCurrentWeather() {
         weatherService.fetch { [weak self] result in
             DispatchQueue.main.async {
@@ -36,7 +41,9 @@ final class WeatherMainInteractor {
     func handle(_ result: Result<WeatherDTO, ApiError>) {
         switch result {
         case .success(let weatherDto):
-            presenter.showContent(.init(weatherDto: weatherDto))
+            let weatherModel = WeatherModel(weatherDto: weatherDto)
+            self.weatherModel = weatherModel
+            presenter.showContent(weatherModel)
         case .failure(let error):
             presenter.showError(error)
         }
@@ -44,10 +51,13 @@ final class WeatherMainInteractor {
         
 }
 
+//MARK: - Extensions
 extension WeatherMainInteractor: WeatherMainInteractorInput {
     
     func didTapDetailsButton() {
-        router.openDetailsScreen()
+        if let model = weatherModel {
+            router.openDetailsScreen(with: model)
+        }
     }
     
     func didTapUpdateButton() {

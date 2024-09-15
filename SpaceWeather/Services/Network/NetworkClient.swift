@@ -47,4 +47,5 @@ struct NetworkClient {
             completion(.failure(ApiError.decodingError))
         }
     }
+    
 }

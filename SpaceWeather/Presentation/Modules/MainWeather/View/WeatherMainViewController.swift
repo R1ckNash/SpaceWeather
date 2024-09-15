@@ -72,6 +72,7 @@ final class WeatherMainViewController: BaseViewController {
 
 //MARK: - Extensions
 extension WeatherMainViewController: WeatherMainViewControllerInput {
+    
     func configure(state: ViewState) {
         switch state {
         case .loading:
@@ -85,6 +86,7 @@ extension WeatherMainViewController: WeatherMainViewControllerInput {
             updateWeatherData(with: model)
         }
     }
+    
 }
 
 //MARK: - Configure UI
@@ -175,15 +177,24 @@ extension WeatherMainViewController {
     
     private func configureUpdateButton() {
         updateButton.translatesAutoresizingMaskIntoConstraints = false
-        updateButton.setTitle("Update", for: .normal)
-        updateButton.setTitleColor(.blue, for: .normal)
+        var config = UIButton.Configuration.filled()
+        config.title = "Update"
+        config.baseBackgroundColor = .systemBlue
+        config.baseForegroundColor = .white
+        
+        updateButton.configuration = config
         updateButton.addTarget(self, action: #selector(didTapUpdateButton), for: .touchUpInside)
     }
     
     private func configureDetailsButton() {
         detailsButton.translatesAutoresizingMaskIntoConstraints = false
-        detailsButton.setTitle("Details", for: .normal)
-        detailsButton.setTitleColor(.blue, for: .normal)
+        var config = UIButton.Configuration.filled()
+        config.title = "Details"
+        config.baseBackgroundColor = .systemBlue
+        config.baseForegroundColor = .white
+        
+        detailsButton.configuration = config
         detailsButton.addTarget(self, action: #selector(didTapDetailsButton), for: .touchUpInside)
     }
+    
 }

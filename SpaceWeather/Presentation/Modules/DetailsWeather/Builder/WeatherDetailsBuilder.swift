@@ -10,25 +10,26 @@ import UIKit
 
 final class WeatherDetailsBuilder {
     
+    //MARK: - Properties
     private let container: DIContainer
+    private let weatherModel: WeatherModel
     
-    init(container: DIContainer) {
+    //MARK: - Lifecycle
+    init(container: DIContainer, weatherModel: WeatherModel) {
         self.container = container
+        self.weatherModel = weatherModel
     }
-    
 }
 
+//MARK: - Extensions
 extension WeatherDetailsBuilder: BuilderProtocol {
     
     func build() -> UIViewController {
         let presenter = WeatherDetailsPresenter()
-        let interactor = WeatherDetailsInteractor(presenter: presenter,
-                                               weatherService: container.weatherService)
-        
+        let interactor = WeatherDetailsInteractor(presenter: presenter, weatherModel: weatherModel)
         let viewController = WeatherDetailsViewController(interactor: interactor)
         
         presenter.view = viewController
-        
         return viewController
     }
     

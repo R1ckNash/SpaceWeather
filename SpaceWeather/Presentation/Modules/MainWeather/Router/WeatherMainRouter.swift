@@ -10,28 +10,26 @@ import UIKit
 
 
 protocol WeatherMainRouterInput {
-    func openDetailsScreen()
+    func openDetailsScreen(with model: WeatherModel)
 }
 
-protocol WeatherRouterProtocol {
+final class WeatherMainRouter {
     
-}
-
-final class WeatherMainRouter: WeatherRouterProtocol {
-    
+    //MARK: - Properties
     weak var view: UIViewController?
     private let container: DIContainer
     
+    //MARK: - Lifecycle
     init(container: DIContainer) {
         self.container = container
     }
-    
 }
 
+//MARK: - Extensions
 extension WeatherMainRouter: WeatherMainRouterInput {
     
-    func openDetailsScreen() {
-        let detailsViewController = WeatherDetailsBuilder(container: container).build()
+    func openDetailsScreen(with model: WeatherModel) {
+        let detailsViewController = WeatherDetailsBuilder(container: container, weatherModel: model).build()
         view?.navigationController?.pushViewController(detailsViewController, animated: true)
     }
     

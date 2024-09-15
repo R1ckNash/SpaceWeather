@@ -43,7 +43,6 @@ class BaseViewController: UIViewController {
     }
     
     //MARK: - Public methods
-    
     func showAlert(message: String) {
         let alertModel = AlertModel(
             title: "Error",

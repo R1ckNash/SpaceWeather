@@ -7,21 +7,29 @@
 
 import Foundation
 
-protocol WeatherDetailsInteractorInput {
-    
+protocol WeatherDetailsInteractorInput: AnyObject {
+    func viewDidLoad()
 }
 
 final class WeatherDetailsInteractor {
     
+    //MARK: - Properties
     private let presenter: WeatherDetailsPresenter
-    private let weatherService: WeatherServiceProtocol
+    private let weatherModel: WeatherModel
     
-    init(presenter: WeatherDetailsPresenter, weatherService: WeatherServiceProtocol) {
+    //MARK: - Lifecycle
+    init(presenter: WeatherDetailsPresenter, weatherModel: WeatherModel) {
         self.presenter = presenter
-        self.weatherService = weatherService
+        self.weatherModel = weatherModel
     }
+    
 }
 
+//MARK: - Extensions
 extension WeatherDetailsInteractor: WeatherDetailsInteractorInput {
+    
+    func viewDidLoad() {
+        presenter.showContent(weatherModel)
+    }
     
 }

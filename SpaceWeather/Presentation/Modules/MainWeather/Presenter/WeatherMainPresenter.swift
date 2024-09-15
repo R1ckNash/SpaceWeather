@@ -15,9 +15,11 @@ protocol WeatherMainPresenterInput {
 
 final class WeatherMainPresenter {
     
+    //MARK: - Properties
     weak var view: WeatherMainViewControllerInput?
 }
 
+//MARK: - Extensions
 extension WeatherMainPresenter: WeatherMainPresenterInput {
     
     func showLoading() {
@@ -31,4 +33,5 @@ extension WeatherMainPresenter: WeatherMainPresenterInput {
     func showContent(_ model: WeatherModel) {
         view?.configure(state: .content(model))
     }
+    
 }

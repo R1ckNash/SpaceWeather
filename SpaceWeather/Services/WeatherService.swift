@@ -26,6 +26,7 @@ final class WeatherService {
 
 //MARK: - Extensions
 extension WeatherService: WeatherServiceProtocol {
+    
     func fetch(completion: @escaping (Result<WeatherDTO, ApiError>) -> Void) {
         remote.fetch { [weak self] result in
             guard let self else { return }

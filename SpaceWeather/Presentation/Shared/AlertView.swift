@@ -14,13 +14,16 @@ protocol AlertViewProtocol {
 
 final class AlertView {
     
+    //MARK: - Properties
     private weak var delegate: UIViewController?
     
+    //MARK: - Lifecycle
     init(delegate: UIViewController) {
         self.delegate = delegate
     }
 }
 
+//MARK: - Extension
 extension AlertView: AlertViewProtocol {
     
     func showAlert(model: AlertModel) {
