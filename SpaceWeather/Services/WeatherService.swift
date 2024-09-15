@@ -8,17 +8,17 @@
 import Foundation
 
 protocol WeatherServiceProtocol {
-    func fetch(completion: @escaping (Result<WeatherDTO, APIError>) -> Void)
+    func fetch(completion: @escaping (Result<CurrentWeatherDTO, APIError>) -> Void)
 }
 
 final class WeatherService {
 
     //MARK: - Properties
-    let remote: RemoteDataSourceProtocol
-    let local: LocalDataSourceProtocol
+    let remote: WeatherRemoteDataSourceProtocol
+    let local: WeatherLocalDataSourceProtocol
     
     //MARK: - Lifecycle
-    init(remote: RemoteDataSourceProtocol, local: LocalDataSourceProtocol) {
+    init(remote: WeatherRemoteDataSourceProtocol, local: WeatherLocalDataSourceProtocol) {
         self.remote = remote
         self.local = local
     }
@@ -27,11 +27,9 @@ final class WeatherService {
 //MARK: - Extensions
 extension WeatherService: WeatherServiceProtocol {
     
-    func fetch(completion: @escaping (Result<WeatherDTO, APIError>) -> Void) {
+    func fetch(completion: @escaping (Result<CurrentWeatherDTO, APIError>) -> Void) {
         
-        let urlString = WeatherRequest().urlString
-        
-        remote.fetch(urlString: urlString) { [weak self] result in
+        remote.fetch { [weak self] result in
             guard let self else { return }
             
             switch result {

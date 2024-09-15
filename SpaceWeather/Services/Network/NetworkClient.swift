@@ -7,7 +7,11 @@
 
 import Foundation
 
-struct NetworkClient {
+protocol NetworkClientProtocol {
+    func fetch(urlString: String, completion: @escaping (Result<Data, Error>) -> Void)
+}
+
+struct NetworkClient: NetworkClientProtocol {
     
     func fetch(urlString: String, completion: @escaping (Result<Data, Error>) -> Void) {
         

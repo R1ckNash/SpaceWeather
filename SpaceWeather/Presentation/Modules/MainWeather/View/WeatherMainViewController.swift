@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 protocol WeatherMainViewControllerInput: AnyObject {
-    func configure(state: ViewState)
+    func configure(state: ViewState<WeatherModel>)
 }
 
 final class WeatherMainViewController: BaseViewController {
@@ -18,13 +18,13 @@ final class WeatherMainViewController: BaseViewController {
     private let interactor: WeatherMainInteractorInput
     
     //MARK: - UI Elements
-    private let backgroundView: UILabel = UILabel()
-    private let updateButton: UIButton = UIButton()
-    private let detailsButton: UIButton = UIButton()
-    private let cityNameLabel: UILabel = UILabel()
-    private let temperatureLabel: UILabel = UILabel()
-    private let weatherIconImageView: UIImageView = UIImageView()
-    private let stackView: UIStackView = UIStackView()
+    private let backgroundView = UILabel()
+    private let updateButton = UIButton()
+    private let detailsButton = UIButton()
+    private let cityNameLabel = UILabel()
+    private let temperatureLabel = UILabel()
+    private let weatherIconImageView = UIImageView()
+    private let stackView = UIStackView()
     
     //MARK: - Lifecycle
     init(interactor: WeatherMainInteractorInput) {
@@ -73,13 +73,14 @@ final class WeatherMainViewController: BaseViewController {
 //MARK: - Extensions
 extension WeatherMainViewController: WeatherMainViewControllerInput {
     
-    func configure(state: ViewState) {
+    func configure(state: ViewState<WeatherModel>) {
         switch state {
         case .loading:
             showLoadingIndicator()
         case .error(let error):
             hideLoadingIndicator()
-            showAlert(message: error.localizedDescription)
+            showAlert(title: "Error".localized, message: error.localizedDescription,
+                      buttonText: "OK".localized, completion: nil)
         case .content(let model):
             hideLoadingIndicator()
             backgroundView.isHidden = false
@@ -178,7 +179,7 @@ extension WeatherMainViewController {
     private func configureUpdateButton() {
         updateButton.translatesAutoresizingMaskIntoConstraints = false
         var config = UIButton.Configuration.filled()
-        config.title = "Update"
+        config.title = "Update".localized
         config.baseBackgroundColor = .systemBlue
         config.baseForegroundColor = .white
         
@@ -189,7 +190,7 @@ extension WeatherMainViewController {
     private func configureDetailsButton() {
         detailsButton.translatesAutoresizingMaskIntoConstraints = false
         var config = UIButton.Configuration.filled()
-        config.title = "Details"
+        config.title = "Details".localized
         config.baseBackgroundColor = .systemBlue
         config.baseForegroundColor = .white
         

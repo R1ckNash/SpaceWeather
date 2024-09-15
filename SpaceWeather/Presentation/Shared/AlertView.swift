@@ -15,11 +15,11 @@ protocol AlertViewProtocol {
 final class AlertView {
     
     //MARK: - Properties
-    private weak var delegate: UIViewController?
+    private weak var view: UIViewController?
     
     //MARK: - Lifecycle
-    init(delegate: UIViewController) {
-        self.delegate = delegate
+    init(view: UIViewController) {
+        self.view = view
     }
 }
 
@@ -34,8 +34,7 @@ extension AlertView: AlertViewProtocol {
         }
         
         alert.addAction(action)
-        DispatchQueue.main.async { [weak self] in
-            self?.delegate?.present(alert, animated: true, completion: nil)
-        }
+        view?.present(alert, animated: true, completion: nil)
     }
+    
 }

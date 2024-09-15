@@ -11,7 +11,7 @@ class BaseViewController: UIViewController {
     
     //MARK: - Properties
     private lazy var alertView: AlertViewProtocol = {
-        return AlertView(delegate: self)
+        return AlertView(view: self)
     }()
     
     //MARK: - UI
@@ -29,11 +29,11 @@ class BaseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupLayout()
+        configureUI()
     }
     
     //MARK: - Private methods
-    private func setupLayout() {
+    private func configureUI() {
         view.addSubview(activityIndicator)
         
         NSLayoutConstraint.activate([
@@ -43,13 +43,14 @@ class BaseViewController: UIViewController {
     }
     
     //MARK: - Public methods
-    func showAlert(message: String) {
+    func showAlert(title: String, message: String, buttonText: String, completion: (() -> Void)?) {
         let alertModel = AlertModel(
-            title: "Error",
+            title: title,
             message: message,
-            buttonText: "OK",
-            completion: nil
+            buttonText: buttonText,
+            completion: completion
         )
         alertView.showAlert(model: alertModel)
     }
+    
 }

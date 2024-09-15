@@ -38,7 +38,7 @@ final class WeatherMainInteractor {
         }
     }
     
-    func handle(_ result: Result<WeatherDTO, APIError>) {
+    func handle(_ result: Result<CurrentWeatherDTO, APIError>) {
         switch result {
         case .success(let weatherDto):
             let weatherModel = WeatherModel(weatherDto: weatherDto)
@@ -62,9 +62,7 @@ extension WeatherMainInteractor: WeatherMainInteractorInput {
     
     func didTapUpdateButton() {
         presenter.showLoading()
-        DispatchQueue.global().asyncAfter(deadline: .now() + 0.5) { [weak self] in
-            self?.fetchCurrentWeather()
-        }
+        fetchCurrentWeather()
     }
     
     func viewDidLoad() {

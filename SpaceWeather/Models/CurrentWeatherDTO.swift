@@ -1,5 +1,5 @@
 //
-//  WeatherDTO.swift
+//  CurrentWeatherDTO.swift
 //  SpaceWeather
 //
 //  Created by Ilia Liasin on 14/09/2024.
@@ -7,24 +7,20 @@
 
 import Foundation
 
-struct WeatherDTO: Codable {
+struct CurrentWeatherDTO: Codable {
     let name: String
-    let weather: [Weather]
-    let main: Main
+    let weather: [WeatherDTO]
+    let main: MainDTO
 }
 
-struct Weather: Codable {
+struct WeatherDTO: Codable {
     let id: Int
     let main: String
     let description: String
     let icon: String
 }
 
-struct Wind: Codable {
-    let speed: Int
-}
-
-struct Main: Codable {
+struct MainDTO: Codable {
     let temp: Float
     let feelsLike: Float
     let pressure: Int

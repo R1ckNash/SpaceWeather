@@ -7,8 +7,8 @@
 
 import Foundation
 
-enum ViewState {
+enum ViewState<T> {
     case loading
     case error(Error)
-    case content(WeatherModel)
+    case content(T)
 }

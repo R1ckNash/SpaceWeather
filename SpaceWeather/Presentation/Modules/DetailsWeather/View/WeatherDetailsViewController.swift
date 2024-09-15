@@ -8,7 +8,7 @@
 import UIKit
 
 protocol WeatherDetailsViewControllerInput: AnyObject {
-    func configure(state: ViewState)
+    func configure(state: ViewState<WeatherModel>)
 }
 
 final class WeatherDetailsViewController: BaseViewController {
@@ -17,13 +17,13 @@ final class WeatherDetailsViewController: BaseViewController {
     private let interactor: WeatherDetailsInteractorInput
     
     //MARK: - UI Elements
-    private let backgroundView: UILabel = UILabel()
-    private let cityNameLabel: UILabel = UILabel()
-    private let temperatureLabel: UILabel = UILabel()
-    private let weatherIconImageView: UIImageView = UIImageView()
-    private let descriptionLabel: UILabel = UILabel()
-    private let humidityLabel: UILabel = UILabel()
-    private let pressureLabel: UILabel = UILabel()
+    private let backgroundView = UILabel()
+    private let cityNameLabel = UILabel()
+    private let temperatureLabel = UILabel()
+    private let weatherIconImageView = UIImageView()
+    private let descriptionLabel = UILabel()
+    private let humidityLabel = UILabel()
+    private let pressureLabel = UILabel()
 
     //MARK: - Lifecycle
     init(interactor: WeatherDetailsInteractorInput) {
@@ -48,8 +48,8 @@ final class WeatherDetailsViewController: BaseViewController {
         cityNameLabel.text = model.name
         temperatureLabel.text = "\(model.temp)°C"
         descriptionLabel.text = model.description
-        humidityLabel.text = "Humidity: \(model.humidity)%"
-        pressureLabel.text = "Pressure: \(model.pressure) hPa"
+        humidityLabel.text = "Humidity: \(model.humidity)%".localized
+        pressureLabel.text = "Pressure: \(model.pressure) hPa".localized
         weatherIconImageView.image = UIImage(systemName: model.iconName)
     }
     
@@ -67,13 +67,14 @@ final class WeatherDetailsViewController: BaseViewController {
 //MARK: - Extensions
 extension WeatherDetailsViewController: WeatherDetailsViewControllerInput {
     
-    func configure(state: ViewState) {
+    func configure(state: ViewState<WeatherModel>) {
         switch state {
         case .loading:
             showLoadingIndicator()
         case .error(let error):
             hideLoadingIndicator()
-            showAlert(message: error.localizedDescription)
+            showAlert(title: "Error".localized, message: error.localizedDescription,
+                      buttonText: "OK".localized, completion: nil)
         case .content(let model):
             hideLoadingIndicator()
             backgroundView.isHidden = false
